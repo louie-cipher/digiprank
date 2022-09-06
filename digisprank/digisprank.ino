@@ -1,5 +1,7 @@
 #include "DigiKeyboardPtBr.h"
 
+char url[] = "https://www.youtube.com/watch?v=FOMGYHD1kY0";
+
 void setup()
 {
     pinMode(1, OUTPUT);
@@ -7,13 +9,7 @@ void setup()
     DigiKeyboardPtBr.update();
     DigiKeyboardPtBr.sendKeyStroke(0);
 
-    for (int i = 0; i < 5; i++)
-    {
-        digitalWrite(1, HIGH);
-        DigiKeyboardPtBr.delay(200);
-        digitalWrite(1, LOW);
-        DigiKeyboardPtBr.delay(200);
-    }
+    ledBlink(5);
 
     DigiKeyboardPtBr.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
     DigiKeyboardPtBr.delay(2200);
@@ -26,9 +22,11 @@ void setup()
     DigiKeyboardPtBr.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
     DigiKeyboardPtBr.delay(1600);
 
-    DigiKeyboardPtBr.println("cmd /k start \"\" https://www.youtube.com/watch?v=FOMGYHD1kY0 && exit");
+    DigiKeyboardPtBr.print("cmd /k start \"\" ");
+    DigiKeyboardPtBr.print(url);
+    DigiKeyboardPtBr.println(" && exit");
 
-    DigiKeyboardPtBr.delay(5000);
+    ledBlink(16);
     keyUp(20);
 }
 
@@ -40,12 +38,12 @@ void loop()
     {
 
         DigiKeyboardPtBr.sendKeyStroke(KEY_N, MOD_CONTROL_LEFT);
-        DigiKeyboardPtBr.delay(1500);
+        ledBlink(5);
 
         if (first == true)
         {
             first = false;
-            DigiKeyboardPtBr.print("https://www.youtube.com/watch?v=FOMGYHD1kY0");
+            DigiKeyboardPtBr.print(url);
             DigiKeyboardPtBr.delay(100);
             DigiKeyboardPtBr.sendKeyStroke(KEY_A, MOD_CONTROL_LEFT);
             DigiKeyboardPtBr.delay(100);
@@ -60,6 +58,17 @@ void loop()
         }
 
         DigiKeyboardPtBr.delay(1500);
+    }
+}
+
+void ledBlink(int times)
+{
+    for (int i = 0; i < times; i++)
+    {
+        digitalWrite(1, HIGH);
+        DigiKeyboardPtBr.delay(250);
+        digitalWrite(1, LOW);
+        DigiKeyboardPtBr.delay(250);
     }
 }
 
